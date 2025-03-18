@@ -17,12 +17,12 @@
         - setBody:
             simple:
               expression: >
-                <Account>
+                <kaoto:Account AccountId="${bean:fakerInstance.idNumber().valid()}" xmlns:kaoto="org.example.Account">
                     <Name>${bean:fakerInstance.name().fullName()}</Name>
                     <Address>${body.streetName()}, ${body.buildingNumber()}</Address>
                     <City>${body.city()}</City>
                     <Country>${body.country()}</Country>
-                </Account>
+                </kaoto:Account>
               resultType: org.w3c.dom.Document
         - to:
             uri: log
@@ -48,7 +48,7 @@
         - setBody:
             simple:
               expression: >
-                <Cart>
+                <kaoto:Cart xmlns:kaoto="org.example.Cart">
                     <Item>
                       <Title>${body.productName()}</Title>
                       <Note>${body.material()}</Note>
@@ -61,7 +61,7 @@
                       <Quantity>${bean:fakerInstance.number().randomDigitNotZero()}</Quantity>
                       <Price>${body.price()}</Price>
                     </Item>
-                </Cart>
+                </kaoto:Cart>
               resultType: org.w3c.dom.Document
         - to:
             uri: log
