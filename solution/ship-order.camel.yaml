@@ -1,0 +1,104 @@
+- route:
+    id: ship-order
+    description: Prepare Ship Order
+    from:
+      uri: timer
+      parameters:
+        period: "3000"
+        timerName: yaml
+      steps:
+        - to:
+            id: to-6059
+            uri: direct
+            parameters:
+              name: get-account
+            disabled: false
+            variableReceive: account
+        - to:
+            id: to-2249
+            uri: direct
+            parameters:
+              name: get-order-sequence
+            disabled: false
+            variableReceive: orderSequence
+        - to:
+            id: to-2155
+            uri: direct
+            parameters:
+              name: get-cart
+        - step:
+            id: kaoto-datamapper-77baea31
+            steps:
+              - to:
+                  id: kaoto-datamapper-xslt-3930
+                  uri: xslt-saxon:kaoto-datamapper-77baea31.xsl
+                  parameters: {}
+            disabled: false
+        - to:
+            id: to-3746
+            uri: log
+            parameters:
+              loggerName: InfoLogger
+              multiline: true
+              showVariables: true
+            disabled: true
+        - log:
+            disabled: false
+            message: ${body}
+- route:
+    id: account
+    description: Get account information
+    from:
+      id: from-3474
+      uri: direct
+      parameters:
+        name: get-account
+      steps:
+        - to:
+            id: to-1664
+            uri: rest
+            parameters:
+              host: localhost:8080
+              method: get
+              path: /account
+        - convertBodyTo:
+            id: convertBodyTo-1914
+            type: org.w3c.dom.Document
+- route:
+    id: sequence
+    description: Get order sequence
+    from:
+      id: from-2229
+      uri: direct
+      parameters:
+        name: get-order-sequence
+      steps:
+        - to:
+            id: to-1475
+            uri: rest
+            parameters:
+              host: localhost:8080
+              method: get
+              path: /sequence
+        - convertBodyTo:
+            id: convertBodyTo-3565
+            type: java.lang.String
+- route:
+    id: route-1654
+    description: Get cart
+    from:
+      id: from-3546
+      uri: direct
+      parameters:
+        name: get-cart
+      steps:
+        - to:
+            id: to-3166
+            uri: rest
+            parameters:
+              host: localhost:8080
+              method: get
+              path: /cart
+        - convertBodyTo:
+            id: convertBodyTo-1966
+            type: org.w3c.dom.Document
