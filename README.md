@@ -11,7 +11,11 @@ We're gonna use variables to leverage the information coming from different endp
 3. Store the data into the account variable
 4. Create a separate route to fetch information from the `/cart` endpoints
 5. Show the data in the terminal
-6. Perform data mapping between the two XML documents
-7. Print the resulting document to the terminal
-8. Store the documents into files
+6. Transform the body to a XML document
+```
+org.w3c.dom.Document
+```
+7. Perform data mapping between the two XML documents
+8. Print the resulting document to the terminal
+9. Store the documents into files
 
